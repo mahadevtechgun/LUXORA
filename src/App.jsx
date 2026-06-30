@@ -8,7 +8,7 @@ import Header from "./components/layout/Header";
 import Home from "./pages/Home";
 import Login from "./components/auth/Login";
 import Shop from "./pages/Shop";
-import SingleProduct from "./pages/singleProduct";
+import SingleProduct from "./pages/SingleProduct";
 import { Register } from "./components/auth/Register";
 import { ForgotPassword } from "./components/auth/Forgot";
 import Cart from "./pages/Cart";
