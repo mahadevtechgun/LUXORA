@@ -1,0 +1,40 @@
+* {
+    scroll-behavior: smooth
+}
+
+::selection {
+    background: #D6BA72;
+    color: #111
+}
+
+.marquee-track {
+    animation: marquee 25s linear infinite
+}
+
+@keyframes marquee {
+    from {
+        transform: translateX(0)
+    }
+
+    to {
+        transform: translateX(-50%)
+    }
+}
+
+.hover-lift {
+    transition: .3s ease
+}
+
+.hover-lift:hover {
+    transform: translateY(-8px)
+}
+
+/* custom modal animation */
+.modal-transition {
+    transition: opacity 0.2s ease, visibility 0.2s ease
+}
+
+.wishlist-active {
+    color: #D6BA72;
+    fill: #D6BA72
+}
