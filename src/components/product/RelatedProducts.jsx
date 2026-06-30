@@ -4,7 +4,7 @@ import Regular_price from "../ui/Regular_price";
 import Product_name from "../ui/Product_name";
 import PriceSale from "../ui/PriceSale";
 import WishlistProductButton from "../ui/WishlistProductButton";
-import { OffProduct } from "../ui/OFFproduct";
+import { OffProduct } from "../ui/OffProduct";
 import { FiShoppingCart, FiEye } from "react-icons/fi";
 
 function RelatedProducts({ allProducts = [], product }) {

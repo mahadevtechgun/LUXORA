@@ -5,7 +5,7 @@ import PriceSale from "../ui/PriceSale";
 import Regular_price from "../ui/Regular_price";
 import Product_name from "../ui/Product_name";
 import Short_description from "../ui/Short_description";
-import { OffProduct } from "../ui/OFFproduct";
+import { OffProduct } from "../ui/OffProduct";
 
 function ProductCard({ product = [] }) {
   const getRating = (item) => {
