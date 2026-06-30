@@ -13,7 +13,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setCart } from "../../redux/cartSlice";
 import { setWishlist } from "../../redux/wishlistSlice";
-import { getCartApi, getWishlistApi } from "../../api/checkoutApi";
+import { getCartApi, getWishlistApi } from "../../Api/checkoutApi";
 
 function Login() {
   const [show, setShow] = useState(false);
