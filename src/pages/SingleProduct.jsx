@@ -11,7 +11,7 @@ import Short_description from "../components/ui/Short_description";
 import Regular_price from "../../src/components/ui/Regular_price";
 import PriceSale from "../components/ui/PriceSale";
 import AddtoCartButton from "../components/ui/AddtoCartButton";
-import { OffProduct } from "../components/ui/OFFproduct";
+import { OffProduct } from "../components/ui/OffProduct";
 import { FiChevronRight, FiTruck, FiLock, FiRefreshCw } from "react-icons/fi";
 
 function SingleProduct() {
