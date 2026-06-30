@@ -6,12 +6,12 @@ import {
 } from "../Api/GetApi";
 
 import DashboardSidebar from "../components/Dashboard/DashboardSidebar";
-import DashboardOverview from "../Components/Dashboard/DashboardOverview";
-import OrdersSection from "../Components/Dashboard/OrdersSection";
-import AddressSection from "../Components/Dashboard/AddressSection";
-import AccountDetails from "../Components/Dashboard/AccountDetails";
-import WishlistSection from "../Components/Dashboard/WishlistSection";
-import CartSection from "../Components/Dashboard/CartSection";
+import DashboardOverview from "../components/Dashboard/DashboardOverview";
+import OrdersSection from "../components/Dashboard/OrdersSection";
+import AddressSection from "../components/Dashboard/AddressSection";
+import AccountDetails from "../components/Dashboard/AccountDetails";
+import WishlistSection from "../components/Dashboard/WishlistSection";
+import CartSection from "../components/Dashboard/Cartsection";
 
 import { useSelector } from "react-redux";
 
