@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { clearCart } from "../../redux/cartSlice";
-import { cancelMyOrder } from "../../api/UpdateApi";
+import { cancelMyOrder } from "../../Api/UpdateApi";
 
 function Order_Success({ orderId, onClose }) {
   const dispatch = useDispatch();
