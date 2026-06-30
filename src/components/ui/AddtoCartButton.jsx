@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { addcart } from "../../redux/cartSlice";
-import { saveCartApi } from "../../api/checkoutApi";
+import { saveCartApi } from "../../Api/checkoutApi";
 import { toast } from "react-toastify";
 
 function AddtoCartButton({ product, selectedColor }) {
