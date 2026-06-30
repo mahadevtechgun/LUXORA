@@ -1,7 +1,7 @@
 import { FaHeart } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleWishlist } from "../../redux/wishlistSlice";
-import { saveWishlistApi } from "../../api/checkoutApi";
+import { saveWishlistApi } from "../../Api/checkoutApi";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { FiArrowRight, FiTag, FiTruck, FiX } from "react-icons/fi";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getShippingRates, applyCouponApi } from "../../api/checkoutApi";
+import { getShippingRates, applyCouponApi } from "../../Api/checkoutApi";
 import { toast } from "react-toastify";
 
 function Order_Summary() {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { FiTag, FiCheckCircle } from "react-icons/fi";
-import { applyCouponApi, getCouponsApi } from "../../api/checkoutApi";
+import { applyCouponApi, getCouponsApi } from "../../Api/checkoutApi";
 import { toast } from "react-toastify";
 
 function Apply_Coupon({ cartItems = [] }) {

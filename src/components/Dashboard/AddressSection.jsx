@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { FiEdit, FiTrash2, FiMapPin, FiPlus } from "react-icons/fi";
 import EmptyState from "./EmptyState";
-import { getCountries, getStates } from "../../api/checkoutApi";
+import { getCountries, getStates } from "../../Api/checkoutApi";
 
 function AddressSection({ savedAddresses = [], setSavedAddresses }) {
   const emptyForm = {
