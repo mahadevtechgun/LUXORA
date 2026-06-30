@@ -10,7 +10,7 @@ import {
   placeOrderApi,
   getUserAddresses,
   saveUserAddresses,
-} from "../api/checkoutApi";
+} from "../Api/checkoutApi";
 
 function Checkout() {
   const cartItems = useSelector((state) => state.cart.items || []);
