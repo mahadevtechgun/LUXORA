@@ -5,7 +5,7 @@ import {
   getUserAddresses,
 } from "../Api/GetApi";
 
-import DashboardSidebar from "../Components/Dashboard/DashboardSidebar";
+import DashboardSidebar from "../components/Dashboard/DashboardSidebar";
 import DashboardOverview from "../Components/Dashboard/DashboardOverview";
 import OrdersSection from "../Components/Dashboard/OrdersSection";
 import AddressSection from "../Components/Dashboard/AddressSection";
