@@ -14,8 +14,6 @@ function CouponPopup() {
 
         if (data?.success && data?.coupons?.length > 0) {
           setCoupon(data.coupons[0]);
-        } else {
-          toast.error("No active coupon found");
         }
       } catch (error) {
         toast.error("Failed to load coupon");
@@ -60,19 +58,17 @@ function CouponPopup() {
   return (
     <div className="fixed inset-0 z-[99999] bg-black/70 backdrop-blur-sm flex items-center justify-center px-4">
       <div className="relative w-full max-w-md bg-white rounded-[2rem] p-7 text-center shadow-2xl overflow-hidden">
-
         <button
           type="button"
           onClick={closePopup}
-          className="absolute top-4 right-4 w-10 h-10 rounded-full bg-black text-white flex items-center justify-center hover:bg-[#D6BA72] hover:text-black transition"
+          className="absolute top-4 right-4 z-50 w-10 h-10 rounded-full bg-black text-white flex items-center justify-center hover:bg-[#D6BA72] hover:text-black transition"
         >
           <FiX size={20} />
         </button>
 
         <div className="absolute -top-20 -right-20 w-44 h-44 bg-[#D6BA72]/30 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="relative z-10">
-
+        <div className="relative z-10 pointer-events-auto">
           <div className="mx-auto w-20 h-20 rounded-full bg-[#D6BA72]/20 flex items-center justify-center text-[#9b7423] text-4xl mb-5">
             <FiGift />
           </div>
@@ -125,7 +121,6 @@ function CouponPopup() {
           >
             No thanks, continue shopping
           </button>
-
         </div>
       </div>
     </div>
