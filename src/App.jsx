@@ -22,6 +22,7 @@ import Faq  from "./pages/Faq";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsConditions from "./pages/TermsConditions";
 import ShippingReturns from "./pages/ShippingReturns";
+import NotFound from "./components/ui/NotFound";
 
 function ProtectedRoute({ children }) {
   const token = localStorage.getItem("token");
@@ -59,6 +60,8 @@ function App() {
         <Route path="/terms-conditions" element={<TermsConditions/>}/>
 
          <Route path="/shipping-returns" element={<ShippingReturns/>}/>
+
+         <Route path="*" element={<NotFound/>}/>
 
         <Route
           path="/dashboard"
