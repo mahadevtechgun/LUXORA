@@ -180,3 +180,21 @@ export const getFeaturedProducts = async () => {
     throw error;
   }
 };
+
+// 
+export const getVariation = async () => {
+  try {
+    const response = await axios.get(
+      "https://efsolit.com/Headless/wp-json/custom/v1/products"
+    );
+
+    return response.data.products;
+
+  } catch (error) {
+    console.error(
+      "Products API Error:",
+      error.response?.data || error.message
+    );
+    throw error;
+  }
+};
