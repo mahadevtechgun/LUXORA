@@ -20,9 +20,7 @@ function Shop() {
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [maxPrice, setMaxPrice] = useState(5000);
-
   const [visibleProducts, setVisibleProducts] = useState(6);
-
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -86,7 +84,6 @@ function Shop() {
       : true;
 
     const productPrice = Number(item?.prices?.price || 0) / 100;
-
     const matchprice = productPrice <= maxPrice;
 
     return matchesSearch && matchesCategory && matchprice;
@@ -119,7 +116,7 @@ function Shop() {
       </section>
 
       {/* Search and Filter Bar */}
-      <section className="py-4 sm:py-6 border-b border-black/5 bg-white/90 backdrop-blur-xl sticky top-0 z-20 shadow-[0_10px_35px_rgba(0,0,0,0.06)]">
+      <section className="py-4 sm:py-6 border-b border-black/5 bg-white/90 backdrop-blur-xl sticky top-[80px] z-30 shadow-[0_10px_35px_rgba(0,0,0,0.06)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-5 justify-between">
             <div className="flex flex-col sm:flex-row gap-3 flex-1">
@@ -132,11 +129,11 @@ function Shop() {
 
       {/* Main Content */}
       <main className="bg-[#fbfaf7]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-16">
           <div className="grid lg:grid-cols-[280px_1fr] gap-8 lg:gap-10">
             {/* Desktop Sidebar */}
             <aside className="hidden lg:block">
-              <div className="bg-white/95 backdrop-blur-xl rounded-[2rem] p-5 sm:p-6 lg:p-7 shadow-[0_20px_60px_rgba(0,0,0,0.08)] border border-black/5 sticky top-28">
+              <div className="bg-white/95 backdrop-blur-xl rounded-[2rem] p-5 sm:p-6 lg:p-7 shadow-[0_20px_60px_rgba(0,0,0,0.08)] border border-black/5 sticky top-[170px]">
                 <h3 className="text-xl sm:text-2xl font-black mb-5 sm:mb-6">
                   Filters
                 </h3>
@@ -155,7 +152,7 @@ function Shop() {
             {/* Products Section */}
             <section>
               {/* Header */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 sm:mb-8">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4 sm:mb-8">
                 <div>
                   <span className="text-[#D6BA72] font-black text-xs uppercase tracking-[0.25em]">
                     Curated Luxury
@@ -173,10 +170,21 @@ function Shop() {
                   </div>
                 </div>
 
-                {/* Mobile Filter Button */}
+                <MobilefilterSidebar
+                  openFilter={openFilter}
+                  setOpenFilter={setOpenFilter}
+                  selectedCategory={selectedCategory}
+                  setSelectedCategory={setSelectedCategory}
+                  maxPrice={maxPrice}
+                  setMaxPrice={setMaxPrice}
+                />
+              </div>
+
+              {/* Sticky Mobile Filter Button */}
+              <div className="lg:hidden sticky top-[150px] z-40 bg-[#fbfaf7]/95 backdrop-blur-md py-3 mb-5">
                 <button
                   onClick={() => setOpenFilter(true)}
-                  className="lg:hidden px-5 py-2.5 rounded-full bg-black text-white font-bold text-sm flex items-center justify-center gap-2 shadow-lg active:scale-95 transition"
+                  className="w-full px-5 py-3 rounded-full bg-black text-white font-bold text-sm flex items-center justify-center gap-2 shadow-lg active:scale-95 transition"
                 >
                   <svg
                     className="w-4 h-4"
@@ -193,15 +201,6 @@ function Shop() {
                   </svg>
                   Filters
                 </button>
-
-                <MobilefilterSidebar
-                  openFilter={openFilter}
-                  setOpenFilter={setOpenFilter}
-                  selectedCategory={selectedCategory}
-                  setSelectedCategory={setSelectedCategory}
-                  maxPrice={maxPrice}
-                  setMaxPrice={setMaxPrice}
-                />
               </div>
 
               {/* Loading State */}

@@ -162,7 +162,7 @@ function Checkout() {
 
   useEffect(() => {
     const fetchShippingRates = async () => {
-      if (!form.country || !form.state || !form.postal || cartItems.length === 0) {
+      if (!form.country || cartItems.length === 0) {
         setShippingRates([freeShipping]);
         setSelectedShipping(freeShipping);
         return;
@@ -172,17 +172,23 @@ function Checkout() {
         setShippingLoading(true);
 
         const payload = {
-          country: form.country,
-          state: form.state,
-          city: form.city,
-          postcode: form.postal,
+          country: form.country || "IN",
+          state: form.state || "",
+          city: form.city || "",
+          postcode: form.postal || "",
           items: cartItems.map((item) => ({
-            product_id: item.product_id || item.id,
+            product_id: item.parent_id || item.product_id || item.id,
+            variation_id: item.variation_id || 0,
             quantity: Number(item.quantity || 1),
           })),
         };
 
+        console.log("Shipping Payload:", payload);
+
         const data = await getShippingRates(payload);
+
+        console.log("Shipping Response:", data);
+
         const rates = data?.rates || [];
 
         if (rates.length > 0) {
@@ -193,7 +199,7 @@ function Checkout() {
           setSelectedShipping(freeShipping);
         }
       } catch (error) {
-        console.log(error);
+        console.log("Shipping Error:", error);
         setShippingRates([freeShipping]);
         setSelectedShipping(freeShipping);
       } finally {
@@ -405,7 +411,8 @@ function Checkout() {
         },
 
         items: cartItems.map((item) => ({
-          product_id: item.product_id || item.id,
+          product_id: item.parent_id || item.product_id || item.id,
+          variation_id: item.variation_id || 0,
           quantity: Number(item.quantity || 1),
         })),
       };
@@ -513,7 +520,8 @@ function Checkout() {
                       </div>
 
                       <p className="text-sm text-neutral-600 mt-3 leading-6">
-                        {addr.address}, {addr.city}, {addr.state}, {addr.postal}
+                        {addr.address}, {addr.city}, {addr.state},{" "}
+                        {addr.postal}
                       </p>
 
                       <p className="text-sm text-neutral-600">{addr.country}</p>

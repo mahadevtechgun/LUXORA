@@ -11,11 +11,39 @@ function Order_Summary_checkout({
   const cartItems = useSelector((state) => state.cart.items || []);
 
   const getPrice = (item) => {
-    if (item?.prices?.price) {
+    if (
+      item?.prices?.price !== undefined &&
+      item?.prices?.price !== null &&
+      item?.prices?.price !== ""
+    ) {
       return Number(item.prices.price) / 100;
     }
 
-    return Number(item?.sale_price || item?.price || 0);
+    if (
+      item?.sale_price !== undefined &&
+      item?.sale_price !== null &&
+      item?.sale_price !== ""
+    ) {
+      return Number(item.sale_price);
+    }
+
+    if (
+      item?.price !== undefined &&
+      item?.price !== null &&
+      item?.price !== ""
+    ) {
+      return Number(item.price);
+    }
+
+    if (
+      item?.regular_price !== undefined &&
+      item?.regular_price !== null &&
+      item?.regular_price !== ""
+    ) {
+      return Number(item.regular_price);
+    }
+
+    return 0;
   };
 
   const subtotal = cartItems.reduce((acc, item) => {
@@ -34,7 +62,6 @@ function Order_Summary_checkout({
 
   const couponPercent = Number(couponData?.percent || 0);
   const tax = 0;
-
   const total = Math.max(subtotal - discount + Number(shipping) + tax, 0);
 
   return (
@@ -71,7 +98,7 @@ function Order_Summary_checkout({
               return (
                 <div
                   className="flex gap-4 rounded-3xl bg-white/10 border border-white/10 p-3"
-                  key={item.id || item.key}
+                  key={item.variation_id || item.id || item.key}
                 >
                   <img
                     className="w-20 h-20 rounded-2xl object-cover bg-white/10"
@@ -87,6 +114,18 @@ function Order_Summary_checkout({
                     <p className="text-white/50 text-sm mt-1">
                       Qty: {quantity}
                     </p>
+
+                    {item?.selectedColor && (
+                      <p className="text-white/50 text-xs mt-1">
+                        Color: {item.selectedColor}
+                      </p>
+                    )}
+
+                    {item?.selectedSize && (
+                      <p className="text-white/50 text-xs mt-1">
+                        Size: {item.selectedSize}
+                      </p>
+                    )}
                   </div>
 
                   <strong className="text-[#D6BA72] whitespace-nowrap">

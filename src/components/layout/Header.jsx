@@ -108,11 +108,11 @@ function Header() {
       ></div>
 
       <div
-        className={`fixed top-0 right-0 h-screen w-[320px] bg-white z-[999] transition-all duration-500 shadow-2xl lg:hidden ${
+        className={`fixed top-0 right-0 h-screen w-[320px] max-w-[85vw] bg-white z-[999] transition-all duration-500 shadow-2xl lg:hidden flex flex-col ${
           menuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        <div className="relative overflow-hidden h-24 border-b border-black/10 flex items-center justify-between px-5">
+        <div className="relative overflow-hidden h-24 border-b border-black/10 flex items-center justify-between px-5 shrink-0">
           <div className="absolute -top-10 -right-10 w-40 h-40 bg-[#D6BA72]/20 blur-[70px] rounded-full"></div>
 
           <div className="relative z-10">
@@ -134,7 +134,7 @@ function Header() {
           </button>
         </div>
 
-        <div className="p-5 flex flex-col gap-3">
+        <div className="p-5 flex-1 overflow-y-auto flex flex-col gap-3">
           {navItems.map((item) => (
             <NavLink
               key={item.path}
@@ -153,7 +153,7 @@ function Header() {
           ))}
         </div>
 
-        <div className="absolute bottom-5 left-5 right-5">
+        <div className="p-5 border-t border-black/10 shrink-0 bg-white">
           <button
             type="button"
             onClick={handleLogin}

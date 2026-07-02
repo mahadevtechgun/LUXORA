@@ -19,12 +19,51 @@ function Order_Summary() {
   const [shippingLoading, setShippingLoading] = useState(false);
   const [couponData, setCouponData] = useState(null);
 
-  const subtotal = cartItems.reduce((acc, item) => {
-    const rawPrice = item?.prices?.price || item?.price || 0;
-    const price = item?.prices?.price
-      ? Number(rawPrice) / 100
-      : Number(rawPrice);
+  const getItemPrice = (item) => {
+    if (
+      item?.prices?.price !== undefined &&
+      item?.prices?.price !== null &&
+      item?.prices?.price !== ""
+    ) {
+      return Number(item.prices.price) / 100;
+    }
 
+    if (
+      item?.sale_price !== undefined &&
+      item?.sale_price !== null &&
+      item?.sale_price !== ""
+    ) {
+      return Number(item.sale_price);
+    }
+
+    if (
+      item?.price !== undefined &&
+      item?.price !== null &&
+      item?.price !== ""
+    ) {
+      return Number(item.price);
+    }
+
+    if (
+      item?.regular_price !== undefined &&
+      item?.regular_price !== null &&
+      item?.regular_price !== ""
+    ) {
+      return Number(item.regular_price);
+    }
+
+    return 0;
+  };
+
+  const getCartApiItems = () =>
+    cartItems.map((item) => ({
+      product_id: item.parent_id || item.product_id || item.id,
+      variation_id: item.variation_id || 0,
+      quantity: Number(item.quantity || 1),
+    }));
+
+  const subtotal = cartItems.reduce((acc, item) => {
+    const price = getItemPrice(item);
     const quantity = Number(item?.quantity || 1);
     return acc + price * quantity;
   }, 0);
@@ -75,10 +114,7 @@ function Order_Summary() {
           state: address.state || "",
           city: address.city || "",
           postcode: address.postal || "",
-          items: cartItems.map((item) => ({
-            product_id: item.product_id || item.id,
-            quantity: Number(item.quantity || 1),
-          })),
+          items: getCartApiItems(),
         };
 
         const data = await getShippingRates(payload);
@@ -107,10 +143,7 @@ function Order_Summary() {
       try {
         const payload = {
           coupon_code: savedCoupon.code,
-          items: cartItems.map((item) => ({
-            product_id: item.product_id || item.id,
-            quantity: Number(item.quantity || 1),
-          })),
+          items: getCartApiItems(),
         };
 
         const data = await applyCouponApi(payload);

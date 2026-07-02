@@ -148,6 +148,13 @@ function SingleProduct() {
     });
   }, [product, variations, selectedColor, selectedSize]);
 
+  const mergedGalleryImages = selectedVariation
+    ? [...(selectedVariation?.images || []), ...(product?.images || [])].filter(
+        (img, index, self) =>
+          img?.src && index === self.findIndex((i) => i?.src === img?.src)
+      )
+    : product?.images || [];
+
   const displayProduct = selectedVariation
     ? {
         ...product,
@@ -157,14 +164,12 @@ function SingleProduct() {
         variation_id: selectedVariation?.id,
         name: product?.name,
         attributes: product?.attributes,
-        images:
-          selectedVariation?.images?.length > 0
-            ? selectedVariation.images
-            : selectedVariation?.image
-            ? [selectedVariation.image]
-            : product?.images,
+        images: mergedGalleryImages,
       }
-    : product;
+    : {
+        ...product,
+        images: product?.images || [],
+      };
 
   const discountText = OffProduct({ items: displayProduct });
 
@@ -190,7 +195,10 @@ function SingleProduct() {
         </div>
 
         <section className="grid lg:grid-cols-2 gap-8 md:gap-12 lg:gap-14 items-start">
-          <ProductGallery product={displayProduct} selectedColor={selectedColor} />
+          <ProductGallery
+            product={displayProduct}
+            selectedColor={selectedColor}
+          />
 
           <div className="space-y-6">
             <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-black tracking-tight leading-tight">

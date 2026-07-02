@@ -14,9 +14,11 @@ import WishlistSection from "../components/Dashboard/WishlistSection";
 import CartSection from "../components/Dashboard/Cartsection";
 
 import { useSelector } from "react-redux";
+import { FiMenu, FiX } from "react-icons/fi";
 
 function UserDashboard() {
   const [active, setActive] = useState("overview");
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const [orders, setOrders] = useState([]);
   const [orderLoader, setOrderLoader] = useState(true);
@@ -152,6 +154,12 @@ function UserDashboard() {
     }
   }, []);
 
+  const handleTabChange = (tab) => {
+    setActive(tab);
+    setEditAccount(false);
+    setSidebarOpen(false);
+  };
+
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("applied_coupon");
@@ -164,21 +172,69 @@ function UserDashboard() {
   };
 
   return (
-    <main className="min-h-screen bg-[#f7f5ef] pt-28 pb-14 px-4">
+    <main className="min-h-screen bg-[#f7f5ef] pt-40 lg:pt-32 pb-14 px-4">
       <div className="max-w-7xl mx-auto">
-        <div className="grid lg:grid-cols-[300px_1fr] gap-8">
-          <DashboardSidebar
-            active={active}
-            setActive={(tab) => {
-              setActive(tab);
-              setEditAccount(false);
-            }}
-            userName={userName}
-            userEmail={userEmail}
-            logout={logout}
+        {/* Fixed Mobile Dashboard Button */}
+        <button
+          type="button"
+          onClick={() => setSidebarOpen(true)}
+          className="lg:hidden fixed top-[92px] left-4 right-4 z-40 h-12 rounded-full bg-black text-white font-black flex items-center justify-center gap-3 shadow-2xl"
+        >
+          <FiMenu size={20} />
+          Dashboard Menu
+        </button>
+
+        <div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-5 lg:gap-8 items-start">
+          {/* Desktop Sidebar */}
+          <aside className="hidden lg:block lg:sticky lg:top-28 z-10">
+            <DashboardSidebar
+              active={active}
+              setActive={handleTabChange}
+              userName={userName}
+              userEmail={userEmail}
+              logout={logout}
+            />
+          </aside>
+
+          {/* Mobile Overlay */}
+          <div
+            onClick={() => setSidebarOpen(false)}
+            className={`fixed inset-0 bg-black/50 backdrop-blur-sm z-[998] transition-all duration-300 lg:hidden ${
+              sidebarOpen ? "opacity-100 visible" : "opacity-0 invisible"
+            }`}
           />
 
-          <section className="bg-white rounded-[2rem] p-5 sm:p-8 shadow-xl border border-black/5">
+          {/* Mobile Slider Sidebar */}
+          <aside
+            className={`fixed top-0 left-0 h-screen w-[320px] max-w-[86vw] bg-[#f7f5ef] z-[999] shadow-2xl transition-transform duration-300 lg:hidden overflow-y-auto ${
+              sidebarOpen ? "translate-x-0" : "-translate-x-full"
+            }`}
+          >
+            <div className="sticky top-0 z-10 bg-[#f7f5ef] border-b border-black/10 px-5 py-4 flex items-center justify-between">
+              <h2 className="text-xl font-black">Dashboard</h2>
+
+              <button
+                type="button"
+                onClick={() => setSidebarOpen(false)}
+                className="w-10 h-10 rounded-full bg-black text-white flex items-center justify-center"
+              >
+                <FiX size={20} />
+              </button>
+            </div>
+
+            <div className="p-4">
+              <DashboardSidebar
+                active={active}
+                setActive={handleTabChange}
+                userName={userName}
+                userEmail={userEmail}
+                logout={logout}
+              />
+            </div>
+          </aside>
+
+          {/* Content */}
+          <section className="bg-white rounded-[1.5rem] sm:rounded-[2rem] p-4 sm:p-8 shadow-xl border border-black/5 min-w-0">
             {active === "overview" && (
               <DashboardOverview
                 userName={userName}

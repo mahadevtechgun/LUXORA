@@ -1,10 +1,12 @@
 import React from "react";
-import { FiHeart, FiX, FiTrash2, FiShoppingBag } from "react-icons/fi";
+import { Link } from "react-router-dom";
+import { FiHeart, FiX, FiTrash2 } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleWishlist, clearWishlist } from "../../redux/wishlistSlice";
 
 import PriceSale from "./PriceSale";
 import AddtoCartButton from "./AddtoCartButton";
+import Product_name from "./Product_name";
 
 function WishlistSidebar({ sidebar, setSidebar }) {
   const dispatch = useDispatch();
@@ -67,11 +69,13 @@ function WishlistSidebar({ sidebar, setSidebar }) {
               >
                 <div className="flex gap-4">
                   <div className="relative shrink-0">
-                    <img
-                      src={item.image || item.images?.[0]?.src}
-                      alt={item.name}
-                      className="w-24 h-24 rounded-3xl object-cover bg-[#f7f5ef]"
-                    />
+                    <Link to={`/product/${item?.id}`}>
+                      <img
+                        src={item.image || item.images?.[0]?.src}
+                        alt={item.name}
+                        className="w-24 h-24 rounded-3xl object-cover bg-[#f7f5ef]"
+                      />
+                    </Link>
 
                     <span className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-black text-[#D6BA72] flex items-center justify-center">
                       <FiHeart size={15} />
@@ -83,9 +87,12 @@ function WishlistSidebar({ sidebar, setSidebar }) {
                       {item.category || "Premium"}
                     </p>
 
-                    <h4 className="font-black text-base mt-1 line-clamp-2">
-                      {item.name}
-                    </h4>
+                    <Link to={`/product/${item?.id}`}onClick={() => setSidebar(false)}>
+                      <h4 className="font-black text-base mt-1 line-clamp-2 hover:text-[#9b7423] transition">
+                        <Product_name items={item} /
+                        >
+                      </h4>
+                    </Link>
 
                     <div className="text-lg font-black mt-2">
                       <PriceSale items={item} />
@@ -113,7 +120,7 @@ function WishlistSidebar({ sidebar, setSidebar }) {
           <div className="p-5 border-t border-black/10 bg-white">
             <button
               onClick={() => dispatch(clearWishlist())}
-              className="w-full h-13 py-4 rounded-full bg-black text-white text-sm font-black hover:bg-[#D6BA72] hover:text-black transition flex items-center justify-center gap-2"
+              className="w-full py-4 rounded-full bg-black text-white text-sm font-black hover:bg-[#D6BA72] hover:text-black transition flex items-center justify-center gap-2"
             >
               <FiTrash2 size={16} />
               Clear Wishlist
