@@ -27,9 +27,10 @@ export const getShippingRates = async (payload) => {
     const response = await axios.post(`${API}/shipping-rates`, payload);
     return response.data;
   } catch (error) {
-    console.error("Shipping API Error:", error);
-    throw error;
-  }
+  console.log("Shipping Error Data:", error.response?.data);
+  console.log("Shipping Error Status:", error.response?.status);
+  throw error;
+}
 };
 
 export const placeOrderApi = async (payload) => {

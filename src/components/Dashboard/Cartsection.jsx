@@ -6,8 +6,13 @@ import { removeItem, increaseQty, decreaseQty } from "../../redux/cartSlice";
 
 function CartSection() {
   const dispatch = useDispatch();
-
   const cartItems = useSelector((state) => state.cart.items) || [];
+
+  const getItemKey = (item) =>
+    item.cartKey ||
+    `${item.id}-${item.variation_id || 0}-${item.selectedColor || ""}-${
+      item.selectedSize || ""
+    }`;
 
   const getImage = (item) =>
     item?.images?.[0]?.src ||
@@ -49,12 +54,13 @@ function CartSection() {
 
       <div className="space-y-4">
         {cartItems.map((item) => {
+          const itemKey = getItemKey(item);
           const price = getPrice(item);
           const quantity = Number(item.quantity) || 1;
 
           return (
             <div
-              key={item.id}
+              key={itemKey}
               className="flex flex-col sm:flex-row items-center gap-5 bg-[#fbfaf7] rounded-2xl p-5 border border-black/5"
             >
               <img
@@ -68,6 +74,14 @@ function CartSection() {
                   {item?.name || "Product Name"}
                 </h3>
 
+                {(item?.selectedColor || item?.selectedSize) && (
+                  <p className="text-xs text-neutral-500 font-bold mt-1">
+                    {item?.selectedColor && `Color: ${item.selectedColor}`}
+                    {item?.selectedColor && item?.selectedSize && " | "}
+                    {item?.selectedSize && `Size: ${item.selectedSize}`}
+                  </p>
+                )}
+
                 <p className="text-neutral-600 font-bold mt-2">
                   ₹{price.toFixed(2)}
                 </p>
@@ -75,7 +89,7 @@ function CartSection() {
                 <div className="flex items-center gap-3 mt-4">
                   <button
                     type="button"
-                    onClick={() => dispatch(decreaseQty(item.id))}
+                    onClick={() => dispatch(decreaseQty(itemKey))}
                     className="w-9 h-9 rounded-xl bg-white border border-black/10 flex items-center justify-center hover:bg-neutral-100 transition"
                   >
                     <FiMinus />
@@ -85,7 +99,7 @@ function CartSection() {
 
                   <button
                     type="button"
-                    onClick={() => dispatch(increaseQty(item.id))}
+                    onClick={() => dispatch(increaseQty(itemKey))}
                     className="w-9 h-9 rounded-xl bg-white border border-black/10 flex items-center justify-center hover:bg-neutral-100 transition"
                   >
                     <FiPlus />
@@ -100,7 +114,7 @@ function CartSection() {
 
                 <button
                   type="button"
-                  onClick={() => dispatch(removeItem(item.id))}
+                  onClick={() => dispatch(removeItem(itemKey))}
                   className="px-4 py-2 rounded-xl bg-red-600 text-white font-black flex items-center justify-center gap-2 hover:bg-red-700 transition"
                 >
                   <FiTrash2 /> Remove
@@ -114,9 +128,7 @@ function CartSection() {
       <div className="mt-6 bg-[#fbfaf7] rounded-2xl p-6 border border-black/5">
         <div className="flex items-center justify-between mb-5">
           <span className="font-black text-lg">Subtotal</span>
-          <span className="font-black text-2xl">
-            ₹{subtotal.toFixed(2)}
-          </span>
+          <span className="font-black text-2xl">₹{subtotal.toFixed(2)}</span>
         </div>
 
         <Link

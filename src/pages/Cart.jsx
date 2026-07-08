@@ -75,59 +75,86 @@ export const Cart = () => {
               </div>
             ) : (
               <div className="divide-y divide-black/5">
-                {cartadd.map((items) => (
-                  <div
-                    key={items.id}
-                    className="grid md:grid-cols-[1.6fr_120px_160px_120px_60px] gap-5 items-center p-5 sm:p-7"
-                  >
-                    <div className="flex gap-4 items-center min-w-0">
-                      <img
-                        className="w-24 h-24 rounded-3xl object-cover bg-[#f7f5ef]"
-                        src={items?.images?.[0]?.src || items?.image}
-                        alt={items?.title || items?.name}
-                      />
+                {cartadd.map((items) => {
+                  const itemKey =
+                    items.cartKey ||
+                    `${items.id}-${items.variation_id || 0}-${
+                      items.selectedColor || ""
+                    }-${items.selectedSize || ""}`;
 
-                      <div className="min-w-0">
-                        <p className="text-[#9b7423] text-[11px] font-black uppercase tracking-widest">
-                          {items?.categories?.[0]?.name || "Premium"}
-                        </p>
-
-                        <Link
-                          to={`/product/${items.id}`}
-                          className="block text-lg sm:text-xl font-black hover:text-[#D6BA72] transition mt-1 line-clamp-2"
-                        >
-                          {items.name}
-                        </Link>
-                      </div>
-                    </div>
-
-                    <div>
-                      <span className="text-gray-400 line-through text-xs md:text-sm">
-                        <Regular_price items={items} />
-                      </span>
-
-                      <span className="block text-base md:text-lg font-black text-black">
-                        <PriceSale items={items} />
-                      </span>
-                    </div>
-
-                    <div className="flex items-center w-fit rounded-full border border-black/15 overflow-hidden">
-                      <ProductQuantity item={items} />
-                    </div>
-
-                    <p className="font-black text-lg">
-                      <PriceSale items={items} />
-                    </p>
-
-                    <button
-                      type="button"
-                      onClick={() => dispatch(removeItem(items.id))}
-                      className="w-11 h-11 rounded-full bg-[#f7f5ef] hover:bg-black hover:text-white transition flex items-center justify-center"
+                  return (
+                    <div
+                      key={itemKey}
+                      className="grid md:grid-cols-[1.6fr_120px_160px_120px_60px] gap-5 items-center p-5 sm:p-7"
                     >
-                      <FiTrash2 size={18} />
-                    </button>
-                  </div>
-                ))}
+                      <div className="flex gap-4 items-center min-w-0">
+                        <img
+                          className="w-24 h-24 rounded-3xl object-cover bg-[#f7f5ef]"
+                          src={
+                            items?.images?.[0]?.src ||
+                            items?.image?.src ||
+                            items?.image ||
+                            "https://via.placeholder.com/200"
+                          }
+                          alt={items?.title || items?.name}
+                        />
+
+                        <div className="min-w-0">
+                          <p className="text-[#9b7423] text-[11px] font-black uppercase tracking-widest">
+                            {items?.categories?.[0]?.name || "Premium"}
+                          </p>
+
+                          <Link
+                            to={`/product/${items.id}`}
+                            className="block text-lg sm:text-xl font-black hover:text-[#D6BA72] transition mt-1 line-clamp-2"
+                          >
+                            {items.name}
+                          </Link>
+
+                          <div className="flex flex-wrap gap-2 mt-2">
+                            {items?.selectedColor && (
+                              <span className="px-3 py-1 rounded-full bg-[#f7f5ef] text-xs font-bold text-black border border-black/10">
+                                Color: {items.selectedColor}
+                              </span>
+                            )}
+
+                            {items?.selectedSize && (
+                              <span className="px-3 py-1 rounded-full bg-[#f7f5ef] text-xs font-bold text-black border border-black/10">
+                                Size: {items.selectedSize}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div>
+                        <span className="text-gray-400 line-through text-xs md:text-sm">
+                          <Regular_price items={items} />
+                        </span>
+
+                        <span className="block text-base md:text-lg font-black text-black">
+                          <PriceSale items={items} />
+                        </span>
+                      </div>
+
+                      <div className="flex items-center w-fit rounded-full border border-black/15 overflow-hidden">
+                        <ProductQuantity item={{ ...items, cartKey: itemKey }} />
+                      </div>
+
+                      <p className="font-black text-lg">
+                        <PriceSale items={items} />
+                      </p>
+
+                      <button
+                        type="button"
+                        onClick={() => dispatch(removeItem(itemKey))}
+                        className="w-11 h-11 rounded-full bg-[#f7f5ef] hover:bg-black hover:text-white transition flex items-center justify-center"
+                      >
+                        <FiTrash2 size={18} />
+                      </button>
+                    </div>
+                  );
+                })}
               </div>
             )}
           </div>

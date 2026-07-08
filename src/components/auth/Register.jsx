@@ -7,8 +7,10 @@ import {
   FiUser,
   FiArrowRight,
 } from "react-icons/fi";
+import { Link } from "react-router-dom";
 
 import { registeruser } from "../../Api/PostApi";
+import { ToastContainer, toast } from "react-toastify";
 
 export function Register() {
   const [show, setShow] = useState(false);
@@ -23,7 +25,7 @@ export function Register() {
     e.preventDefault();
 
     if (!name || !mail || !password) {
-      alert("Please fill all fields");
+      toast.error("Please fill all fields");
       return;
     }
 
@@ -34,14 +36,14 @@ export function Register() {
 
       console.log("Register Success:", data);
 
-      // token save
+      // Save Token
       if (data?.token) {
         localStorage.setItem("token", data.token);
       }
 
-      alert("Register Successfully");
+      toast.success("Register Successfully");
 
-      // clear fields
+      // Clear Fields
       setName("");
       setMail("");
       setPassword("");
@@ -52,7 +54,7 @@ export function Register() {
         error.response?.data || error.message
       );
 
-      alert(
+      toast.error(
         error.response?.data?.message || "Register Failed"
       );
 
@@ -152,27 +154,41 @@ export function Register() {
                 onClick={() => setShow(!show)}
                 className="absolute right-5 top-1/2 -translate-y-1/2 text-neutral-500"
               >
-                {show ? (
-                  <FiEyeOff size={20} />
-                ) : (
-                  <FiEye size={20} />
-                )}
+                {show ? <FiEyeOff size={20} /> : <FiEye size={20} />}
               </button>
             </div>
           </div>
 
-          {/* Button */}
+          {/* Register Button */}
           <button
             type="submit"
             disabled={loading}
-            className="w-full h-14 rounded-2xl bg-black text-white font-black hover:bg-[#D6BA72] hover:text-black transition-all duration-300 flex items-center justify-center gap-3"
+            className="w-full h-14 rounded-2xl bg-black text-white font-black hover:bg-[#D6BA72] hover:text-black transition-all duration-300 flex items-center justify-center gap-3 disabled:opacity-60"
           >
             {loading ? "Creating..." : "Create Account"}
 
             {!loading && <FiArrowRight size={18} />}
           </button>
+
+          
+
+          {/* Text Link */}
+          <div className="text-center">
+            <p className="text-sm text-neutral-500">
+              Already have an account?{" "}
+              <Link
+                to="/login"
+                className="font-bold text-black hover:text-[#D6BA72]"
+              >
+                Login
+              </Link>
+            </p>
+          </div>
+
         </form>
       </div>
+
+      <ToastContainer position="top-right" autoClose={3000} />
     </main>
   );
 }

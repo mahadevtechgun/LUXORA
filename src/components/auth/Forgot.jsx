@@ -2,6 +2,7 @@ import { useState } from "react";
 import { FiMail, FiArrowRight } from "react-icons/fi";
 
 import { forgotPassword } from "../../Api/PostApi";
+import {ToastContainer, toast } from "react-toastify";
 
 export function ForgotPassword() {
   const [email, setEmail] = useState("");
@@ -11,7 +12,7 @@ export function ForgotPassword() {
     e.preventDefault();
 
     if (!email) {
-      alert("Please enter your email");
+      toast.error("Please enter your email");
       return;
     }
 
@@ -22,7 +23,7 @@ export function ForgotPassword() {
 
       console.log("Forgot Password Success:", data);
 
-      alert(
+      toast.error(
         data?.message || "Password reset link sent to your email"
       );
 
@@ -34,7 +35,7 @@ export function ForgotPassword() {
         error.response?.data || error.message
       );
 
-      alert(
+      toast.error(
         error.response?.data?.message ||
         "Failed to send reset link"
       );
@@ -98,6 +99,7 @@ export function ForgotPassword() {
           </button>
         </form>
       </div>
-    </main>
+
+<ToastContainer position="top-right" autoClose={3000} />    </main>
   );
 }
